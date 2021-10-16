@@ -29,3 +29,4 @@ phi=np.array([0,0.8,-0.64])
 
 mygi=getgi(phi)
 print('Green:',mygi)
+print((mygi**2).sum())
