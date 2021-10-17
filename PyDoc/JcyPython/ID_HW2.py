@@ -6,7 +6,7 @@ output = open("Houses.json", "w")
 
 for i in range(1,6):
 
-    url = "https://bj.fang.lianjia.com/loupan/pg" + str(i)
+    url = "https://bj.fang.lianjia.com/loupan/pg" + str(i)#翻页
     htmldoc = requests.get(url)
 
     soup = bs4.BeautifulSoup(htmldoc.text,features='html.parser')
@@ -21,6 +21,6 @@ for i in range(1,6):
         output.write("楼盘名称：" + name + "  楼盘类型：" + type + "  楼盘街区：" + location + "  楼盘面积：" + area +"  楼盘均价：" + averageprice + "\n")
         print("楼盘名称：" + name + "  楼盘类型：" + type + "  楼盘街区：" + location + "  楼盘面积：" + area +"  楼盘均价：" + averageprice)
 
-    time.sleep(20)
+    time.sleep(20)#休眠以免封ip
 
 output.close()
