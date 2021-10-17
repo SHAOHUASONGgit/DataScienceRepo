@@ -12,6 +12,9 @@ output = open("SchoolAndCourse.json", "w")
 for item in SchoolAndCourse:
     School = item.find("h3").text
     Course = item.find("p").text.replace("门课程",'')
-    output.write(School + "," + Course + "\n")
+    if School == "" :
+        continue
+    else:
+        output.write(School + "," + Course + "\n")
 
 output.close()
