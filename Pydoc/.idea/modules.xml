@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PyDoc.iml" filepath="$PROJECT_DIR$/.idea/PyDoc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Pydoc.iml" filepath="$PROJECT_DIR$/.idea/Pydoc.iml" />
     </modules>
   </component>
 </project>
