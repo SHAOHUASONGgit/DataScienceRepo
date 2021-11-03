@@ -19,7 +19,7 @@ def Shannon(dataset , indexin):#计算信息熵
     for key in times:
             prob = times[key] / len(dataset)
             output += prob * log(prob , 2)
-    return abs(output)
+    return abs(output)#返回绝对值，熵越高代表信息越杂乱（越不容易分类）
 
 def splitdata(dataset , indexin , value):#输入dataset，按照dataset[indexin]是否等于value对列表进行分解，即按照indexin对应特征进行区分
     output = []
