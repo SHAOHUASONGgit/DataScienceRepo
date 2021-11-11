@@ -59,3 +59,11 @@ MacOS基于XNU混合内核，基本不需要配置环境依赖，经测试正常
 保存容器：docker commit {CONTAINER ID} ubuntu:name（保存CONTAINER ID对应的容器在ubuntu下，tag为name）
 
 目前已经通过Docker搭建完全分布式Hadoop集群
+
+
+
+### 有关Docker Desktop的进一步学习
+
+Docker可以通过阅读DockerFile自动创建并配置镜像，本质上是一个包含命令的文本
+
+有关DockerFile的编写：https://docs.docker.com/engine/reference/builder/
