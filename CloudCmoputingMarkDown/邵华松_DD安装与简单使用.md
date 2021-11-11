@@ -46,7 +46,7 @@ MacOS下直接使用Homebrew安装，打开Terminal
 
 MacOS基于XNU混合内核，基本不需要配置环境依赖，经测试正常运行
 
-
+![MacOS Docker Desktop](https://raw.githubusercontent.com/SHAOHUASONGgit/DataScienceRepo/main/CloudCmoputingMarkDown/picture/macOSDockermd4.png)
 
 
 
@@ -57,3 +57,5 @@ MacOS基于XNU混合内核，基本不需要配置环境依赖，经测试正常
 启动容器：docker run -it ubuntu:16.04（-i保持标准输入打开状态，-t分配一个伪tty）
 
 保存容器：docker commit {CONTAINER ID} ubuntu:name（保存CONTAINER ID对应的容器在ubuntu下，tag为name）
+
+目前已经通过Docker搭建完全分布式Hadoop集群
