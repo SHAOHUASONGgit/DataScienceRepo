@@ -12,7 +12,7 @@ Docker依赖于已存在并运行的Linux内核环境，对于部分版本的Win
 
 更新WSL2 Linux kernel：https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
 
-以管理员权限打开一个PowerShell窗口
+选择以管理员权限打开一个PowerShell窗口
 
 输入并重启：dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 
@@ -32,13 +32,28 @@ Docker依赖于已存在并运行的Linux内核环境，对于部分版本的Win
 
 随后正常启动Docker Desktop，运行“docker run hello-world”测试
 
-
+![Docker Hello World](https://raw.githubusercontent.com/SHAOHUASONGgit/DataScienceRepo/main/CloudCmoputingMarkDown/picture/dockerHellomd4.png)
 
 
 
 ### MacOS下Docker Desktop安装
 
+MacOS下直接使用Homebrew安装，打开Terminal
+
+输入：brew install docker
+
+或者选择网页下载，地址：https://docs.docker.com/desktop/mac/install/
+
+MacOS基于XNU混合内核，基本不需要配置环境依赖，经测试正常运行
 
 
 
 
+
+### Docker Desktop的简单使用（以Ubuntu为例）
+
+拉取镜像：docker pull ubuntu:16.04（拉取Docker Hub上ubuntu仓库中tag为16.04的镜像，若无指定tag则拉取tag为latest的镜像）
+
+启动容器：docker run -it ubuntu:16.04（-i保持标准输入打开状态，-t分配一个伪tty）
+
+保存容器：docker commit {CONTAINER ID} ubuntu:name（保存CONTAINER ID对应的容器在ubuntu下，tag为name）
