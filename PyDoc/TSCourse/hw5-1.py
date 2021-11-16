@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import statsmodels.tsa.api as smt
 
 def caculatediff(diff, step, input):
     if(step!=0):
