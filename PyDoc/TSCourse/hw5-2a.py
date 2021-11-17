@@ -1,20 +1,28 @@
-import matplotlib.pyplot as plt
 import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
-import statsmodels.tsa.api as smt
-from statsmodels.stats.diagnostic import acorr_ljungbox as lb_test
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from statsmodels.stats.diagnostic import acorr_ljungbox
+from statsmodels.tsa.arima.model import ARIMA
 
-def drawts(y):
+
+def drawer(input):
     plt.figure(figsize=(10,8))
-    ts_ax=plt.subplot2grid((2,2),(0,0),colspan=2)
-    acf_ax=plt.subplot2grid((2,2),(1,0))
-    pacf_ax=plt.subplot2grid((2,2),(1,1))
-    ts_ax.plot(y,'*-')
-    ts_ax.set_title('Time Series Analysis Plots')
-    smt.graphics.plot_acf(y,lags=None,ax=acf_ax,alpha=0.05)
-    smt.graphics.plot_pacf(y,lags=None,ax=pacf_ax,alpha=0.05)
+    series = plt.subplot2grid((2, 2), (0, 0), colspan=2)
+    acf=plt.subplot2grid((2,2),(1,0))
+    pacf=plt.subplot2grid((2,2),(1,1))
+    series.plot(input, '*-')
+    plot_acf(input,ax=acf)
+    plot_pacf(input,ax=pacf)
     plt.show()
     plt.close()
+
+def purerandtest(y):
+    a,b=acorr_ljungbox(y,lags=None,boxpierce=False)
+    LB_purerand=pd.DataFrame(np.c_[a,b],columns=['LB','Pvalue'])
+    LB_purerand['lags']=range(1,len(a)+1)
+    print('----time series: LB pure randomness test----')
+    print(LB_purerand)
 
 def caculatediff(diff, step, input):
     if(step!=0):
@@ -24,15 +32,35 @@ def caculatediff(diff, step, input):
     input = input[1:] - input[:-1]
     return caculatediff(diff - 1, 0, input)
 
-def purerandtest(y):
-    a,b=lb_test(y,lags=None,boxpierce=False)
-    LB_purerand=pd.DataFrame(np.c_[a,b],columns=['LB','Pvalue'])
-    LB_purerand['lags']=range(1,len(a)+1)
-    print('----time series: LB pure randomness test----')
-    print(LB_purerand)
+def drawcompare(series, prediction):
+    plt.plot(series, "*-", label='observe')
+    plt.plot(prediction, label='fittes')
+    plt.legend()
+    plt.show()
+    plt.close()
 
 filename = "data_hw5.1.csv"
 series = pd.read_csv(filename, header=None)
 series.iloc[:, 0] = series.iloc[:, 0].astype("float")
 series = series.values[:, 0]
-drawts(series)
+drawer(series)
+
+diff1 = caculatediff(1,0,series)
+purerandtest(diff1)
+drawer(diff1)
+
+model = ARIMA(series, order=(2, 1, 2)).fit()
+print('----fitting summary----')
+print(model.summary())
+
+resid=model.resid
+print('\n----residual pure randomness test')
+purerandtest(resid)
+
+prediction = model.get_prediction(start=0,end=len(series)-1+10,dynamic=False)
+print('\n----fitted confidence interval: %d %%'%((1-0.05)*100))
+print(prediction.summary_frame(alpha=0.05))
+
+prediction = prediction.summary_frame(alpha=0.05).iloc[:,[0]]
+prediction = prediction.values[:, 0]
+drawcompare(series,prediction[1:])
