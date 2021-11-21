@@ -26,14 +26,15 @@ Mininet 2.2.0之后的版本内置了一个构建网络拓扑的可视化工具m
 
 启动命令：sudo ./miniedit.py（不加sudo可能出现错误：“Mininet must run as root”）
 
-
-
 构建拓扑结构，如下图
 
+![Create](https://raw.githubusercontent.com/SHAOHUASONGgit/DataScienceRepo/main/CloudCmoputingMarkDown/picture/miniEditmd6.png)
 
+在Edit-Preferences中设置运行后启动CLI，点击run运行，执行命令pingall
 
-点击run运行，执行命令pingall
+![Ping all](https://raw.githubusercontent.com/SHAOHUASONGgit/DataScienceRepo/main/CloudCmoputingMarkDown/picture/pingAllmd6.png)
 
+点击stop停止运行，点击File，选择将脚本导出，方便下次使用
 
+![Output](https://raw.githubusercontent.com/SHAOHUASONGgit/DataScienceRepo/main/CloudCmoputingMarkDown/picture/saveNetmd6.png)
 
-点击stop停止运行，将脚本导出，方便下次使用
