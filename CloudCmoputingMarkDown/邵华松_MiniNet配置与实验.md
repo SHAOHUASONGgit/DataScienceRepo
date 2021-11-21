@@ -18,6 +18,10 @@ Mininet虚拟机下载：https://github.com/mininet/mininet/releases/download/2.
 
 更新并安装GUI界面lxde，该步骤时间较长
 
+更新：sudo apt-get update
+
+安装lxde：sudo apt-get install xinit x11-xserver-utils lxde
+
 ### Mininet实验
 
 Mininet 2.2.0之后的版本内置了一个构建网络拓扑的可视化工具miniedit.py，利用该工具可以自定义网络拓扑结构
