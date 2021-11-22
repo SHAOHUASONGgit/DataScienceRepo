@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
-from mpl_toolkits.mplot3d import axes3d
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 def dataReader(fileName):
     dataset = pd.read_csv(fileName, header=None)
@@ -68,7 +67,7 @@ prediction = iriskNN_Classify(dataset, [2,2,2,2], 7)
 print("It is " + prediction)
 checkResult = check(dataset,7)
 print(checkResult)
-
+'''
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 print(dataset)
@@ -84,3 +83,4 @@ for data in dataset:
         ax.scatter(x, y, z, c='#008000')
 plt.show()
 plt.close()
+'''
