@@ -42,7 +42,8 @@ for line in sys.stdin:
                     outputStream.append(currentUser1)
                 else:
                     output = "Recommend for user:" + str(outputStream[0]) + "\t"
-                    for data in outputStream[1:]:
+                    recommendationInOrder = sorted(outputStream[1:], key=lambda mutualNum: len(mutualNum[1]),reverse=True)
+                    for data in recommendationInOrder:
                         output = output + str(data[0]) + "(" + str(len(data[1])) + ":" + str(data[1]) + ") "
                     print(output)
                     currentUser1 = user1
@@ -54,7 +55,8 @@ for line in sys.stdin:
             else:
                 outputStream.append([currentUser2, mutualCount.copy()])
                 output = "Recommend for user:" + str(outputStream[0]) + "\t"
-                for data in outputStream[1:]:
+                recommendationInOrder = sorted(outputStream[1:], key=lambda mutualNum: len(mutualNum[1]), reverse=True)
+                for data in recommendationInOrder:
                     output = output + str(data[0]) + "(" + str(len(data[1])) + ":" + str(data[1]) + ") "
                 print(output)
                 currentUser1 = user1
@@ -68,6 +70,14 @@ if(-1 in mutualCount):
         pass
     else:
         output = "Recommend for user:" + str(outputStream[0]) + "\t"
-        for data in outputStream[1:]:
+        recommendationInOrder = sorted(outputStream[1:], key=lambda mutualNum: len(mutualNum[1]), reverse=True)
+        for data in recommendationInOrder:
             output = output + str(data[0]) + "(" + str(len(data[1])) + ":" + str(data[1]) + ") "
         print(output)
+else:
+    outputStream.append([currentUser2, mutualCount.copy()])
+    output = "Recommend for user:" + str(outputStream[0]) + "\t"
+    recommendationInOrder = sorted(outputStream[1:], key=lambda mutualNum:len(mutualNum[1]),reverse=True)
+    for data in recommendationInOrder:
+        output = output + str(data[0]) + "(" + str(len(data[1])) + ":" + str(data[1]) + ") "
+    print(output)
