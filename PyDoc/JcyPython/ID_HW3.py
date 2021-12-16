@@ -67,7 +67,7 @@ DongsihuanYearAverage.insert(0,"Dongsihuan年均值")
 NongzhanguanYearAverage.insert(0,"Nongzhanguan年均值")
 USYearAverage.insert(0,"US年均值")
 
-output = open("PM_BeiJing.csv","w")
+output = open("PM_BeiJing.csv","w", encoding='utf-8-sig')
 writer = csv.writer(output)
 
 writer.writerow(year_month)
@@ -75,8 +75,6 @@ writer.writerow(DongsiMonthAverage)
 writer.writerow(DongsihuanMonthAverage)
 writer.writerow(NongzhanguanMonthAverage)
 writer.writerow(USMonthAverage)
-
-writer.writerow(["-"] * len(year_month))
 
 writer.writerow(Year)
 writer.writerow(DongsiYearAverage)
