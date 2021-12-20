@@ -73,5 +73,7 @@ def BGR2LabColorReshape(image):
     image = Lab2BGR(image)
     return image
 
-imageB = cv2.imread("input/1.png")
-BGR2LabColorReshape(imageB)
+
+image = cv2.imread("input/1.png")
+image = BGR2LabColorReshape(image)
+cv2.imwrite("afterLab.png", image)

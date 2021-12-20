@@ -1,7 +1,7 @@
 import csv
 import calendar
 
-input = open("pm25-data-for-five-chinese-cities/BeijingPM20100101_20151231.csv","r")
+input = open("pm25-data-for-five-chinese-cities/BeijingPM20100101_20151231.csv", "r")
 reader = csv.reader(input)
 
 year_month = []
@@ -67,7 +67,7 @@ DongsihuanYearAverage.insert(0,"Dongsihuan年均值")
 NongzhanguanYearAverage.insert(0,"Nongzhanguan年均值")
 USYearAverage.insert(0,"US年均值")
 
-output = open("PM_BeiJing.csv","w", encoding='utf-8-sig')
+output = open("PM_BeiJing.csv", "w", encoding='utf-8-sig', newline='')
 writer = csv.writer(output)
 
 writer.writerow(year_month)
@@ -75,6 +75,8 @@ writer.writerow(DongsiMonthAverage)
 writer.writerow(DongsihuanMonthAverage)
 writer.writerow(NongzhanguanMonthAverage)
 writer.writerow(USMonthAverage)
+
+writer.writerow("")
 
 writer.writerow(Year)
 writer.writerow(DongsiYearAverage)
