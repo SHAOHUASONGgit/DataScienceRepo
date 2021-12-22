@@ -1,5 +1,4 @@
 import csv
-
 import requests
 import bs4
 import time
@@ -11,11 +10,11 @@ header = {
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6"
 }
 totalLocation = {"东城": "dongcheng", "西城": "xicheng", "朝阳": "chaoyang", "海淀": "haidian"}
-output = open("lianjia.csv", "w", encoding='utf-8-sig', newline='')
+output = open("data.csv", "w", encoding='utf-8-sig', newline='')
 writer = csv.writer(output)
 writer.writerow(["片区", "总价(万元)", "小区", "朝向", "面积"])
 for location in list(totalLocation.keys()):
-    for pages in range(1,11):
+    for pages in range(1, 31):
         url = "https://bj.lianjia.com/ershoufang/" + str(totalLocation.get(location)) + "/pg" + str(pages)
         htmldoc = requests.get(url, headers=header)
         soup = bs4.BeautifulSoup(htmldoc.text, features='html.parser')
@@ -29,6 +28,6 @@ for location in list(totalLocation.keys()):
             houseDirection = houseInfo[2]
             csvInfo = [location, housePrice, houseName, houseLayout, str(houseArea)]
             writer.writerow(csvInfo)
-        time.sleep(5)
+        time.sleep(1)
     print(location + " Done!")
 output.close()
