@@ -48,20 +48,19 @@ for data in input:
     dataWithLocation.append(int(data[4]))
     dataForVisual.append((province, dataWithLocation))
 
-
-
 opt = opts.InitOpts(width="1400px", height="700px")
 ItemStyleOpt = opts.ItemStyleOpts(color="rgb(5,101,123)", opacity=1, border_width=0.8, border_color="rgb(62,215,213)")
 Map3DLabelOpt = opts.Map3DLabelOpts(is_show=False)
 LabelOpt=opts.LabelOpts(is_show=False, color="#fff", font_size=10, background_color="rgba(0,23,11,0)")
 Map3DLightOpt=opts.Map3DLightOpts(main_color="#fff", main_intensity=1.2, main_shadow_quality="high", is_main_shadow=False, main_beta=10, ambient_intensity=0.3)
+LegendOpt=opts.LegendOpts(selected_mode='single')
 map = Map3D(init_opts=opt).set_global_opts(title_opts=opts.TitleOpts(title="升学数据"))
 map.add_schema(
     maptype='china',
     itemstyle_opts=ItemStyleOpt,
     map3d_label=Map3DLabelOpt,
     emphasis_label_opts=LabelOpt,
-    light_opts=Map3DLightOpt
+    light_opts=Map3DLightOpt,
 )
 map.add(
     is_selected=False,
