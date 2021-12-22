@@ -50,7 +50,7 @@ def Lab2BGR(image):  # Convert Lab Image to BGR Image
     outputImage = cv2.merge([B, G, R])
     return outputImage
 
-def histLab(inputMat, rangeSize, min):  # Run based on bug
+def histLab(inputMat, rangeSize, min):
     hist = [0] * rangeSize
     U = 0
     totalPixels = inputMat.size
@@ -92,9 +92,9 @@ def darkChannelReblance(image):  # Chapter 3
         newChannels.append(afterChannel)
     outputImage = cv2.merge([newChannels[0], newChannels[1], newChannels[2]])
     return outputImage
-
-image = cv2.imread("input/1.png")
 #image = darkChannelReblance(image)
+
+image = cv2.imread("beforeLab.png")
 image = BGR2LabColorReshape(image)
 image = BRGReblance(image)
 cv2.imwrite("afterLab.png", image)
