@@ -79,7 +79,7 @@ def BRGReblance(image):  # Chapter 4 Step 2
     outputImage = cv2.merge([B, G, R])
     return outputImage
 
-def darkChannelReblance(image):  # Chapter 3
+def darkChannelReblance(image):
     B, G, R = cv2.split(image)
     totalAverage = (np.average(B) + np.average(G) + np.average(R)) / 3
     kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5))
@@ -92,7 +92,6 @@ def darkChannelReblance(image):  # Chapter 3
         newChannels.append(afterChannel)
     outputImage = cv2.merge([newChannels[0], newChannels[1], newChannels[2]])
     return outputImage
-#image = darkChannelReblance(image)
 
 image = cv2.imread("beforeLab.png")
 image = BGR2LabColorReshape(image)
