@@ -17,7 +17,7 @@ def funt2BGR(inputMat):
     outputMat = np.where((inputMat ** 3) > 0.008856, inputMat ** 3, (inputMat - 16 / 116) / 7.787)
     return outputMat
 
-def bgr2BRG(inputMat):
+def bgr2BGR(inputMat):
     outputMat = np.where(inputMat < 1, inputMat, 1)
     outputMat = np.where(outputMat > 0, outputMat, 0) * 255
     return outputMat
@@ -44,9 +44,9 @@ def Lab2BGR(image):  # Convert Lab Image to BGR Image
     Y = funt2BGR(Y) * 1
     X = funt2BGR(X) * 0.9547
     Z = funt2BGR(Z) * 1.08883
-    R = bgr2BRG(gamma2BGR(X * 3.2406 + Y * -1.5372 + Z * -0.4986)).astype(np.uint8)
-    G = bgr2BRG(gamma2BGR(X * -0.9689 + Y * 1.8758 + Z * 0.0415)).astype(np.uint8)
-    B = bgr2BRG(gamma2BGR(X * 0.0557 + Y * -0.2040 + Z * 1.0570)).astype(np.uint8)
+    R = bgr2BGR(gamma2BGR(X * 3.2406 + Y * -1.5372 + Z * -0.4986)).astype(np.uint8)
+    G = bgr2BGR(gamma2BGR(X * -0.9689 + Y * 1.8758 + Z * 0.0415)).astype(np.uint8)
+    B = bgr2BGR(gamma2BGR(X * 0.0557 + Y * -0.2040 + Z * 1.0570)).astype(np.uint8)
     outputImage = cv2.merge([B, G, R])
     return outputImage
 
@@ -71,7 +71,7 @@ def BGR2LabColorReshape(image):  # Chapter 4 Step 1
     outputImage = Lab2BGR(outputImage)
     return outputImage
 
-def BRGReblance(image):  # Chapter 4 Step 2
+def BGRReblance(image):  # Chapter 4 Step 2
     B, G, R = cv2.split(image)
     B = cv2.equalizeHist(B)
     G = cv2.equalizeHist(G)
@@ -82,7 +82,7 @@ def BRGReblance(image):  # Chapter 4 Step 2
 def darkChannelReblance(image):
     B, G, R = cv2.split(image)
     totalAverage = (np.average(B) + np.average(G) + np.average(R)) / 3
-    kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5))
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
     newChannels = []
     for channel in [B, G, R]:
         if(np.average(channel)>totalAverage):
@@ -93,7 +93,7 @@ def darkChannelReblance(image):
     outputImage = cv2.merge([newChannels[0], newChannels[1], newChannels[2]])
     return outputImage
 
-image = cv2.imread("beforeLab.png")
-image = BGR2LabColorReshape(image)
-image = BRGReblance(image)
-cv2.imwrite("afterLab.png", image)
+#image = cv2.imread("4.png")
+#image = BGR2LabColorReshape(image)
+#image = BGRReblance(image)
+#cv2.imwrite("a4.png", image)
