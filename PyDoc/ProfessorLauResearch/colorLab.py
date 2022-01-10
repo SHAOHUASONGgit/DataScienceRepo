@@ -1,26 +1,32 @@
 import cv2
 import numpy as np
 
+
 def gamma2Lab(inputMat):
     outputMat = np.where(inputMat > 0.0405, ((inputMat + 0.055) / 1.055) ** 2.4, inputMat / 12.92)
     return outputMat
+
 
 def funt2Lab(inputMat):
     outputMat = np.where(inputMat > 0.008856, inputMat ** (1 / 3), (inputMat * 7.787) + 16 / 116)
     return outputMat
 
+
 def gamma2BGR(inputMat):
     outputMat = np.where(inputMat > 0.0031308, 1.055 * (inputMat ** 0.4166) - 0.055, inputMat * 12.92)
     return outputMat
+
 
 def funt2BGR(inputMat):
     outputMat = np.where((inputMat ** 3) > 0.008856, inputMat ** 3, (inputMat - 16 / 116) / 7.787)
     return outputMat
 
+
 def bgr2BGR(inputMat):
     outputMat = np.where(inputMat < 1, inputMat, 1)
     outputMat = np.where(outputMat > 0, outputMat, 0) * 255
     return outputMat
+
 
 def BGR2Lab(image):  # Convert BGR Image to Lab Image
     B, G, R = cv2.split(image.astype(np.float32))
@@ -36,6 +42,7 @@ def BGR2Lab(image):  # Convert BGR Image to Lab Image
     outputImage = cv2.merge([L, a, b])
     return outputImage
 
+
 def Lab2BGR(image):  # Convert Lab Image to BGR Image
     L, a, b = cv2.split(image)
     Y = (L + 16) / 116
@@ -50,6 +57,7 @@ def Lab2BGR(image):  # Convert Lab Image to BGR Image
     outputImage = cv2.merge([B, G, R])
     return outputImage
 
+
 def histLab(inputMat, rangeSize, min):
     hist = [0] * rangeSize
     U = 0
@@ -59,6 +67,7 @@ def histLab(inputMat, rangeSize, min):
     for data in range(len(hist)):
         U += (data + min) * hist[data]
     return hist, U
+
 
 def BGR2LabColorReshape(image):  # Chapter 4 Step 1
     outputImage = BGR2Lab(image)
@@ -71,6 +80,7 @@ def BGR2LabColorReshape(image):  # Chapter 4 Step 1
     outputImage = Lab2BGR(outputImage)
     return outputImage
 
+
 def BGRReblance(image):  # Chapter 4 Step 2
     B, G, R = cv2.split(image)
     B = cv2.equalizeHist(B)
@@ -79,13 +89,14 @@ def BGRReblance(image):  # Chapter 4 Step 2
     outputImage = cv2.merge([B, G, R])
     return outputImage
 
+
 def darkChannelReblance(image):
     B, G, R = cv2.split(image)
     totalAverage = (np.average(B) + np.average(G) + np.average(R)) / 3
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
     newChannels = []
     for channel in [B, G, R]:
-        if(np.average(channel)>totalAverage):
+        if (np.average(channel) > totalAverage):
             afterChannel = cv2.erode(channel, kernel, iterations=1)
         else:
             afterChannel = cv2.dilate(channel, kernel, iterations=1)
@@ -93,7 +104,9 @@ def darkChannelReblance(image):
     outputImage = cv2.merge([newChannels[0], newChannels[1], newChannels[2]])
     return outputImage
 
-#image = cv2.imread("4.png")
-#image = BGR2LabColorReshape(image)
-#image = BGRReblance(image)
-#cv2.imwrite("a4.png", image)
+
+if __name__ == "__main__":
+    image = cv2.imread("input/1.png")
+    image = BGR2LabColorReshape(image)
+    image = BGRReblance(image)
+    cv2.imwrite("a4.png", image)
