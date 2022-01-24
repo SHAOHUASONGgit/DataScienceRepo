@@ -1,6 +1,5 @@
 import cv2
 from colorLab import darkChannelReblance
-from matplotlib import pyplot as plt
 
 image = cv2.imread("3.png")
 B, G, R = cv2.split(image)
