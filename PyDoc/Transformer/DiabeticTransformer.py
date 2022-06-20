@@ -10,8 +10,6 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from torchvision.utils import make_grid
-
 class ThermoDataBase(Dataset):
     def __init__(self):
         self.CgroupList = os.listdir("ThermoDataBase/Control Group")
@@ -37,7 +35,6 @@ class ThermoDataBase(Dataset):
             return "ThermoDataBase/Control Group", torch.Tensor([1, 0])
         if path in self.DgroupList:
             return "ThermoDataBase/DM Group", torch.Tensor([0, 1])
-
 class CNNnet(nn.Module):
 
     def __init__(self) -> None:
