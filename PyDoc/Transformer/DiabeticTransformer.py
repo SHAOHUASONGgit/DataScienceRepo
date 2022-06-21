@@ -1,5 +1,7 @@
 import os
 import cv2
+import time
+import torch
 import torch.optim
 import torch.nn as nn
 import torch.nn.functional as F
@@ -10,7 +12,9 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torchvision import transforms
+
 class ThermoDataBase(Dataset):
+
     def __init__(self):
         self.CgroupList = os.listdir("ThermoDataBase/Control Group")
         self.DgroupList = os.listdir("ThermoDataBase/DM Group")
@@ -35,6 +39,7 @@ class ThermoDataBase(Dataset):
             return "ThermoDataBase/Control Group", torch.Tensor([1, 0])
         if path in self.DgroupList:
             return "ThermoDataBase/DM Group", torch.Tensor([0, 1])
+
 class CNNnet(nn.Module):
 
     def __init__(self) -> None:
@@ -62,11 +67,11 @@ class CNNnet(nn.Module):
 dataset = ThermoDataBase()
 data_loader = DataLoader(dataset=dataset, batch_size=6, shuffle=True, drop_last=True)
 
-cnn = CNNnet()
+cnn = CNNnet().to("mps")
 lossf = nn.CrossEntropyLoss()
 losss = nn.CrossEntropyLoss(reduction='sum')
 opt = optim.SGD(cnn.parameters(), lr=0.001)
-epoch = 100
+epoch = 20
 
 writer = SummaryWriter("History")
 wstep = 0
@@ -74,8 +79,13 @@ wstep = 0
 for i in range(epoch):
     print("-----" + "训练第 " + str(i + 1) +" 轮"+ "-----")
     times = 0
+
+    timestart = time.time()
+
     for data in data_loader:
         imgs, labels = data
+        imgs = imgs.to("mps")
+        labels = labels.to("mps")
         outputs = cnn(imgs)
         loss = lossf(outputs, labels)
         opt.zero_grad()
@@ -88,8 +98,11 @@ for i in range(epoch):
         totalLoss = 0
         total = 0
         true = 0
+
         for data in data_loader:
             imgs, labels = data
+            imgs = imgs.to("mps")
+            labels = labels.to("mps")
             outputs = cnn(imgs)
             loss = losss(outputs, labels)
             totalLoss = totalLoss + loss
@@ -104,7 +117,15 @@ for i in range(epoch):
         writer.add_scalar("Accuracy", true/total, wstep)
         writer.add_scalar("Total Loss", totalLoss, wstep)
         print(totalLoss)
+
+    timeend = time.time()
+    print(round(timeend - timestart, 2))
+
     wstep += 1
-tempimg = torch.randn(6, 3, 160, 160)
-writer.add_graph(cnn, tempimg)
+
+#tempimg = torch.randn(6, 3, 160, 160)
+#writer.add_graph(cnn, tempimg)
 writer.close()
+
+#GPU epoch = 10, 29.16s
+#CPU epoch = 10, 30.09s
